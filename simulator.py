@@ -32,11 +32,33 @@ class Game:
         'Militia': {'Category': 'Action', 'Cost': 4, 'Play_Order': -1, 'Money': 2},
         'Market': {'Category': 'Action', 'Cost': 5, 'Play_Order': -1, 'Actions': 1, 'Buys': 1, 'Cards': 1, 'Money': 1},
         'Mine': {'Category': 'Action', 'Cost': 5, 'Play_Order': -1}
-
-
     }
 
-    def __init__(self, num_players):
+    # Initialize a game, provided a number of players
+    def __init__(self, num_players, center_pile={}):
+
+        # Initialize starting center pile
+        if len(center_pile) == 0:
+            self.center_pile = {
+                'Copper': 10,
+                'Silver': 10,
+                'Gold': 10,
+
+                'Estate': 10,
+                'Duchy': 10,
+                'Province': 10,
+
+                'Cellar': 10,
+                'Moat': 10,
+                'Village': 10,
+                'Merchant': 10,
+                'Workshop': 10,
+                'Smithy': 10,
+                'Remodel': 10,
+                'Militia': 10,
+                'Market': 10,
+                'Mine': 10
+            }
 
         # Initialize player list
         self.num_players = num_players
@@ -44,7 +66,10 @@ class Game:
         for i in range(num_players):
             self.player_list.append(Player())
 
-        self.center_pile = {}
+        # Variable to track round
+        self.round = 1
+
+
 
 
 # Player class
