@@ -8,7 +8,9 @@ class Simulator:
 
     def simulate(self, num_games):
         for i in range(num_games):
-            #TODO
+            g = Game(4)
+            winners = g.winners
+            # Add matrices
 
 
 # Game class represents a single game of Dominion
@@ -20,18 +22,18 @@ class Game:
 
         'Estate': {'Category': 'Victory', 'Cost': 2, 'Play_Order': -1, 'VP': 1},
         'Duchy': {'Category': 'Victory', 'Cost': 5, 'Play_Order': -1, 'VP': 3},
-        'Province': {'Category': 'Victory', 'Cost': 8, 'Play_Order': -1, 'VP': 6},
+        'Province': {'Category': 'Victory', 'Cost': 8, 'Play_Order': -1, 'VP': 6}
 
-        'Cellar': {'Category': 'Action', 'Cost': 2, 'Play_Order': -1, 'Actions': 1},
-        'Moat': {'Category': 'Action', 'Cost': 2, 'Play_Order': -1, 'Cards': 2},
-        'Village': {'Category': 'Action', 'Cost': 3, 'Play_Order': -1, 'Actions': 2, 'Cards': 1},
-        'Merchant': {'Category': 'Action', 'Cost': 3, 'Play_Order': -1, 'Actions': 1, 'Cards': 1},
-        'Workshop': {'Category': 'Action', 'Cost': 3, 'Play_Order': -1},
-        'Smithy': {'Category': 'Action', 'Cost': 4, 'Play_Order': -1, 'Cards': 3},
-        'Remodel': {'Category': 'Action', 'Cost': 4, 'Play_Order': -1, 'Drop': 1},
-        'Militia': {'Category': 'Action', 'Cost': 4, 'Play_Order': -1, 'Money': 2},
-        'Market': {'Category': 'Action', 'Cost': 5, 'Play_Order': -1, 'Actions': 1, 'Buys': 1, 'Cards': 1, 'Money': 1},
-        'Mine': {'Category': 'Action', 'Cost': 5, 'Play_Order': -1}
+        #'Cellar': {'Category': 'Action', 'Cost': 2, 'Play_Order': -1, 'Actions': 1},
+        #'Moat': {'Category': 'Action', 'Cost': 2, 'Play_Order': -1, 'Cards': 2},
+        #'Village': {'Category': 'Action', 'Cost': 3, 'Play_Order': -1, 'Actions': 2, 'Cards': 1},
+        #'Merchant': {'Category': 'Action', 'Cost': 3, 'Play_Order': -1, 'Actions': 1, 'Cards': 1},
+        #'Workshop': {'Category': 'Action', 'Cost': 3, 'Play_Order': -1},
+        #'Smithy': {'Category': 'Action', 'Cost': 4, 'Play_Order': -1, 'Cards': 3},
+        #'Remodel': {'Category': 'Action', 'Cost': 4, 'Play_Order': -1, 'Drop': 1},
+        #'Militia': {'Category': 'Action', 'Cost': 4, 'Play_Order': -1, 'Money': 2},
+        #'Market': {'Category': 'Action', 'Cost': 5, 'Play_Order': -1, 'Actions': 1, 'Buys': 1, 'Cards': 1, 'Money': 1},
+        #'Mine': {'Category': 'Action', 'Cost': 5, 'Play_Order': -1}
     }
 
     # Initialize a game, provided a number of players
@@ -65,11 +67,13 @@ class Game:
         self.player_list = []
         for i in range(num_players):
             self.player_list.append(Player())
+        # Shuffle player list here
 
         # Variable to track round
         self.round = 1
 
-
+    def next_turn(self):
+            
 
 
 # Player class
@@ -111,6 +115,13 @@ class Card:
         self.category = category
         self.cost = cost
 
+
+# Card_Matrix Class
+class Card_Matrix:
+    def __init__(self, type):
+
+        # type can be 'play', 'buy', or 'drop'
+        self.type = type
 
 
 
