@@ -1,7 +1,8 @@
 # Simulator class used to simulated multiple games of Dominion
 class Simulator:
-    aggregate_play_matrix = []
-    aggregate_buy_matrix = []
+    aggregate_play_matrix = Card_Matrix('play')
+    aggregate_buy_matrix = Card_Matrix('buy')
+    aggregate_drop_matrix = Card_Matrix('drop')
 
     def __init__(self, num_players):
         self.num_players = num_players
@@ -9,8 +10,8 @@ class Simulator:
     def simulate(self, num_games):
         for i in range(num_games):
             g = Game(4)
-            winners = g.winners
-            # Add matrices
+            g.run()
+            g.get_winners()
 
 
 # Game class represents a single game of Dominion
@@ -63,7 +64,6 @@ class Game:
             }
 
         # Initialize player list
-        self.num_players = num_players
         self.player_list = []
         for i in range(num_players):
             self.player_list.append(Player())
@@ -72,7 +72,18 @@ class Game:
         # Variable to track round
         self.round = 1
 
+    def run(self):
+        while self.game_over() is False:
+            self.next_turn()
+
     def next_turn(self):
+        pass
+
+    def game_over(self):
+        pass
+
+    def get_winners(self):
+        pass
             
 
 
@@ -86,12 +97,11 @@ class Player:
 
     # Buys card from center pile and moves it to Player's discard pile
     def buy_card(self, card_name):
-        #TODO
+        pass
 
     # Removes card from Player's draw pile and moves to hand
-    def draw_card
-
-
+    def draw_card(self):
+        pass
 
 
 # Deck class used by each Player to represent his/her deck
@@ -124,7 +134,8 @@ class Card_Matrix:
         self.type = type
 
 
-
+game = Game(4)
+game.run()
 
 
 
