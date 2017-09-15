@@ -185,14 +185,20 @@ class CardMatrix:
             round_dictionary[card_name] = 100
         self.matrix = [dict(round_dictionary) for i in range(31)]
 
+        self.normalize_matrix()
+
     def add_to_matrix(self, round, card_name):
         self.matrix[round][card_name] = self.matrix[round].get(card_name, 0) + 1
 
-    def add_another_matrix(self):
-        pass
+    def add_another_matrix(self, other_matrix):
+        for i in range(31):
+            
 
     def normalize_matrix(self):
-        pass
+        for round_dict in self.matrix:
+            stat_sum = sum(round_dict.values())
+            for card_name in round_dict.keys():
+                round_dict[card_name] = int(round_dict[card_name] * 100 / stat_sum)
 
     def __str__(self):
         string = '\n' + self.player_name + '\'s ' + self.type + ' Matrix:\n'
