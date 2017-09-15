@@ -1,5 +1,4 @@
-import Dominion
+from Dominion import *
 
-
-game = Dominion.Game()
+game = Game()
 game.run()

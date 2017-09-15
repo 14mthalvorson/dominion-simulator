@@ -22,6 +22,14 @@ class Simulator:
             g.get_winners()
 
 
+class TestThis:
+    def __init__(self):
+        print('print this')
+
+    def test_return(self):
+        return 'hello'
+
+
 # Game class represents a single game of Dominion
 class Game:
     card_information = {
@@ -113,10 +121,12 @@ class Game:
 class Player:
     def __init__(self, name):
         self.name = name
-        self.hand = []
         self.deck = Deck()
+
         self.play_matrix = []
         self.buy_matrix = []
+
+        self.hand = []
 
     # Buys card from center pile and moves it to Player's discard pile
     def buy_card(self, card_name):
