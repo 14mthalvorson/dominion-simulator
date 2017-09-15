@@ -112,7 +112,7 @@ class Game:
         while self.game_over() is False:
             self.next_turn()
 
-        self.conclude_game()
+        return self.conclude_game()
 
     def next_turn(self):
         # Increment self.round at appropriate time
@@ -142,12 +142,23 @@ class Game:
             return False
 
     def conclude_game(self):
-        pass
+        print('\n\nConclusion:')
+        max_vp = 0
+        max_vp_player = None
+        for player in self.player_list:
+            total_vp = self.sum_victory_points(player)
+            if total_vp > max_vp:
+                max_vp = total_vp
+                max_vp_player = player
+        print('\nWinner is ' + max_vp_player.name)
+        return max_vp_player
 
     def sum_victory_points(self, player):
         victory_points = 0
         for card in player.deck.draw_pile + player.deck.discard_pile:
-
+            victory_points += card.victory_points
+        print(player.name + ' has ' + str(victory_points) + ' victory points.')
+        return victory_points
 
     def action_phase(self, player):
         for card in player.hand:
@@ -241,3 +252,4 @@ class Card:
         self.cost = card_information[self.name].get('Cost')
         self.play_order = card_information[self.name].get('Play Order')
         self.money = card_information[self.name].get('Money', 0)
+        self.victory_points = card_information[self.name].get('VP', 0)
