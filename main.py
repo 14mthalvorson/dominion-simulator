@@ -1,4 +1,4 @@
 from Dominion import *
 
 sim = Simulator()
-sim.run(1000)
+sim.run(2000)

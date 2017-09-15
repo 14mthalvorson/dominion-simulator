@@ -7,10 +7,12 @@ class Game:
         'Copper': {'Category':'Treasure', 'Cost': 0, 'Play Order': 0, 'Money': 1},
         'Silver': {'Category': 'Treasure', 'Cost': 3, 'Play Order': 0, 'Money': 2},
         'Gold': {'Category': 'Treasure', 'Cost': 6, 'Play Order': 0, 'Money': 3},
+        'Platinum': {'Category': 'Treasure', 'Cost': 9, 'Play Order': 0, 'Money': 5},
 
         'Estate': {'Category': 'Victory', 'Cost': 2, 'Play Order': -1, 'VP': 1},
         'Duchy': {'Category': 'Victory', 'Cost': 5, 'Play Order': -1, 'VP': 3},
-        'Province': {'Category': 'Victory', 'Cost': 8, 'Play Order': -1, 'VP': 6}
+        'Province': {'Category': 'Victory', 'Cost': 8, 'Play Order': -1, 'VP': 6},
+        'Colony': {'Category': 'Victory', 'Cost': 11, 'Play Order': -1, 'VP': 10}
 
         #'Cellar': {'Category': 'Action', 'Cost': 2, 'Play Order': -1, 'Actions': 1},
         #'Moat': {'Category': 'Action', 'Cost': 2, 'Play Order': -1, 'Cards': 2},
@@ -33,10 +35,12 @@ class Game:
                 'Copper': 30,
                 'Silver': 20,
                 'Gold': 20,
+                'Platinum': 15,
 
                 'Estate': 20,
                 'Duchy': 15,
-                'Province': 10
+                'Province': 10,
+                'Colony': 10
             }
 
             '''
@@ -205,19 +209,19 @@ class CardMatrix:
     def add_another_matrix(self, other):
         for i in range(31):
             for card_name in self.matrix[i].keys():
-                self.matrix[i][card_name] += other.matrix[i].get(card_name, 0) - 166
+                self.matrix[i][card_name] += other.matrix[i].get(card_name, 0) - (1000 / len(Game.card_information))
         self.normalize_matrix()
 
     def normalize_matrix(self):
         for round_dict in self.matrix:
             stat_sum = sum(round_dict.values())
             for card_name in round_dict.keys():
-                round_dict[card_name] = int(round_dict[card_name] * 1000 / stat_sum)
+                round_dict[card_name] = max(1, int(round_dict[card_name] * 1000 / stat_sum))
 
     def __str__(self):
         string = '\n' + self.player_name + '\'s ' + self.type + ' Matrix:\n'
-        for round_dict in self.matrix:
-            string += str(round_dict) + '\n'
+        for i in range(1, 30):
+            string += 'Round ' + str(i) + ": " + str(self.matrix[i]) + '\n'
         return string
 
 
