@@ -1,4 +1,4 @@
 from Dominion import *
 
-game = Game()
-game.run()
+sim = Simulator()
+sim.run(1000)
