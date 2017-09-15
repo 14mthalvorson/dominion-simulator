@@ -1,11 +1,26 @@
 import random
 
+
 # Card_Matrix Class
 class CardMatrix:
     def __init__(self, type):
 
         # type can be 'play', 'buy', or 'drop'
         self.type = type
+
+        round_dictionary = {}
+        for card in Game.card_information.keys():
+            round_dictionary.add(card, 100)
+        self.matrix = [round_dictionary for i in range(30)]
+
+    def add_to_matrix(self, round, card_name):
+        pass
+
+    def add_another_matrix(self):
+        pass
+
+    def normalize_matrix(self):
+        pass
 
 
 # Simulator class used to simulated multiple games of Dominion

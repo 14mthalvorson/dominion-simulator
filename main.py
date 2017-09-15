@@ -1,4 +1,5 @@
 from Dominion import *
 
-game = Game()
-game.run()
+for i in range(1):
+    game = Game()
+    game.run()
