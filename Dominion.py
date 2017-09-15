@@ -165,10 +165,16 @@ class Game:
             if self.center_pile[card_name] > 0 and self.card_information[card_name]['Cost'] <= money:
                 eligible_cards.append(card_name)
         if len(eligible_cards) > 0:
-            random.shuffle(eligible_cards)
-            card_to_buy = eligible_cards.pop(0)
-            self.buy_card(player, card_to_buy)
-            return
+            sum_rank = 0
+            for card_name in eligible_cards:
+                sum_rank += Simulator.aggregate_buy_matrix.matrix[self.round][card_name]
+
+            for card_name in eligible_cards:
+                if random.random() * sum_rank < Simulator.aggregate_buy_matrix.matrix[self.round][card_name]:
+                    self.buy_card(player, card_name)
+                    return
+                else:
+                    sum_rank -= Simulator.aggregate_buy_matrix.matrix[self.round][card_name]
         else:
             if self.output:
                 print('Not buying any card')
