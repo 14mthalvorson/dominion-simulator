@@ -25,7 +25,7 @@ class Game:
     }
 
     # Initialize a game, provided a number of players
-    def __init__(self, num_players=4, center_pile=None):
+    def __init__(self, num_players=4, center_pile=None, output=False):
 
         # Initialize starting center pile
         if center_pile is None:
@@ -62,6 +62,7 @@ class Game:
         self.round = 0
         self.first_player = self.player_list[0]
         self.current_player = None
+        self.output = output
 
         # Initialize starting decks for players
         self.initialize_decks()
@@ -87,15 +88,18 @@ class Game:
         # Increment self.round at appropriate time
         if self.player_list[0] is self.first_player:
             self.round += 1
-            print('\nRound:', self.round)
+            if self.output:
+                print('\nRound:', self.round)
 
         self.current_player = self.player_list.pop(0)
-        print('\nTurn:', self.current_player.name)
+        if self.output:
+            print('\nTurn:', self.current_player.name)
 
         for i in range(5):
             self.current_player.draw_card()
 
-        print(self.current_player)
+        if self.output:
+            print(self.current_player)
 
         self.action_phase(self.current_player)
         self.buy_phase(self.current_player)
@@ -111,7 +115,8 @@ class Game:
             return False
 
     def conclude_game(self):
-        print('\n\nConclusion:')
+        if self.output:
+            print('\n\nConclusion:')
         max_vp = 0
         max_vp_player = None
         for player in self.player_list:
@@ -119,29 +124,35 @@ class Game:
             if total_vp > max_vp:
                 max_vp = total_vp
                 max_vp_player = player
-        print('\nWinner is ' + max_vp_player.name)
-        print(max_vp_player.buy_matrix)
+
+        if self.output:
+            print('\nWinner is ' + max_vp_player.name)
+            print(max_vp_player.buy_matrix)
         return max_vp_player
 
     def sum_victory_points(self, player):
         victory_points = 0
         for card in player.deck.draw_pile + player.deck.discard_pile:
             victory_points += card.victory_points
-        print(player.name + ' has ' + str(victory_points) + ' victory points.')
+        if self.output:
+            print(player.name + ' has ' + str(victory_points) + ' victory points.')
         return victory_points
 
     def action_phase(self, player):
         for card in player.hand:
             if card.category == 'Action':
-                print('Playing: ' + card.name)
+                if self.output:
+                    print('Playing: ' + card.name)
                 return
-        print('Not playing any card')
+        if self.output:
+            print('Not playing any card')
 
     def buy_phase(self, player):
         money = 0
         for card in player.hand:
             money += card.money
-        print('Total Money: ' + str(money))
+        if self.output:
+            print('Total Money: ' + str(money))
 
         # Find eligible cards to buy
         eligible_cards = []
@@ -154,13 +165,14 @@ class Game:
             self.buy_card(player, card_to_buy)
             return
         else:
-            print('Not buying any card')
+            if self.output:
+                print('Not buying any card')
 
 
     # Buys card from center pile and moves it to Player's discard pile
     def buy_card(self, player, card_name):
-
-        print('Buying: ' + card_name)
+        if self.output:
+            print('Buying: ' + card_name)
 
         # Adds tally to Player's buy_matrix
         player.buy_matrix.add_to_matrix(self.round, card_name)
@@ -224,7 +236,7 @@ class Simulator:
             g = Game(self.num_players)
             winner = g.run()
             self.aggregate_buy_matrix.add_another_matrix(winner.buy_matrix)
-            print(self.aggregate_buy_matrix)
+        print(self.aggregate_buy_matrix)
 
 
 # Player class
