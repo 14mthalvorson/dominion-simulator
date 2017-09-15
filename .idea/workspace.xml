@@ -18,7 +18,7 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/dominion_simulator$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1505451575735" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/dominion_simulator$simulator.coverage" NAME="simulator Coverage Results" MODIFIED="1505271740294" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/dominion_simulator$main.coverage" NAME="main Coverage Results" MODIFIED="1505493365266" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/dominion_simulator$main.coverage" NAME="main Coverage Results" MODIFIED="1505494101083" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/dominion_simulator$Dominion.coverage" NAME="Dominion Coverage Results" MODIFIED="1505451741090" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
@@ -34,8 +34,8 @@
           <file leaf-file-name="Dominion.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Dominion.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="646">
-                  <caret line="155" column="43" lean-forward="false" selection-start-line="155" selection-start-column="43" selection-end-line="155" selection-end-column="43" />
+                <state relative-caret-position="595">
+                  <caret line="144" column="12" lean-forward="false" selection-start-line="144" selection-start-column="12" selection-end-line="144" selection-end-column="12" />
                   <folding />
                 </state>
               </provider>
@@ -435,7 +435,14 @@
       <option name="project" value="LOCAL" />
       <updated>1505451857747</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added basic action phase to game sequence.">
+      <created>1505493419749</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1505493419749</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -482,7 +489,8 @@
     <MESSAGE value="Refactored Simulator class to main." />
     <MESSAGE value="Refactored main to Dominion. Added separate class for functions which should be in main method." />
     <MESSAGE value="Cleared up class names, default PyCharm running configurations." />
-    <option name="LAST_COMMIT_MESSAGE" value="Cleared up class names, default PyCharm running configurations." />
+    <MESSAGE value="Added basic action phase to game sequence." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added basic action phase to game sequence." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -555,8 +563,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Dominion.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="155" column="43" lean-forward="false" selection-start-line="155" selection-start-column="43" selection-end-line="155" selection-end-column="43" />
+        <state relative-caret-position="595">
+          <caret line="144" column="12" lean-forward="false" selection-start-line="144" selection-start-column="12" selection-end-line="144" selection-end-column="12" />
           <folding />
         </state>
       </provider>

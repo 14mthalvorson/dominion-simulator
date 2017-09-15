@@ -112,6 +112,8 @@ class Game:
         while self.game_over() is False:
             self.next_turn()
 
+        self.conclude_game()
+
     def next_turn(self):
         # Increment self.round at appropriate time
         if self.player_list[0] is self.first_player:
@@ -134,13 +136,18 @@ class Game:
         self.player_list.append(self.current_player)
 
     def game_over(self):
-        if self.round == 10:
+        if self.round == 30:
             return True
         else:
             return False
 
-    def get_winners(self):
+    def conclude_game(self):
         pass
+
+    def sum_victory_points(self, player):
+        victory_points = 0
+        for card in player.deck.draw_pile + player.deck.discard_pile:
+
 
     def action_phase(self, player):
         for card in player.hand:
@@ -155,8 +162,24 @@ class Game:
             money += card.money
         print('Total Money: ' + str(money))
 
+        # Find eligible cards to buy
+        eligible_cards = []
+        for card_name in self.center_pile.keys():
+            if self.center_pile[card_name] > 0 and self.card_information[card_name]['Cost'] <= money:
+                eligible_cards.append(card_name)
+        if len(eligible_cards) > 0:
+            random.shuffle(eligible_cards)
+            card_to_buy = eligible_cards.pop(0)
+            self.buy_card(player, card_to_buy)
+            return
+        else:
+            print('Not buying any card')
+
+
     # Buys card from center pile and moves it to Player's discard pile
     def buy_card(self, player, card_name):
+
+        print('Buying: ' + card_name)
 
         # Adds card to Player's discard pile
         player.deck.discard_pile.append(Card({card_name: self.card_information.get(card_name)}))
@@ -203,6 +226,11 @@ class Deck:
     def __init__(self):
         self.draw_pile = []
         self.discard_pile = []
+
+    def __str__(self):
+        string = 'Deck: '
+        for card in self.draw_pile + self.discard_pile:
+            string += card.name + ' '
 
 
 # Card class represents a playing card in Dominion
