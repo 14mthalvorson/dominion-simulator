@@ -25,6 +25,7 @@ class Game:
         #'Market': {'Category': 'Action', 'Cost': 5, 'Play Order': -1, 'Actions': 1, 'Buys': 1, 'Cards': 1, 'Money': 1},
         #'Mine': {'Category': 'Action', 'Cost': 5, 'Play Order': -1}
     }
+    max_round = 50
 
     # Initialize a game, provided a number of players
     def __init__(self, num_players=4, center_pile=None, output=False):
@@ -113,7 +114,7 @@ class Game:
         self.player_list.append(self.current_player)
 
     def game_over(self):
-        if self.round == 30:
+        if self.round == Game.max_round:
             return True
         else:
             return False
@@ -199,7 +200,7 @@ class CardMatrix:
         round_dictionary = {}
         for card_name in Game.card_information.keys():
             round_dictionary[card_name] = 100
-        self.matrix = [dict(round_dictionary) for i in range(31)]
+        self.matrix = [dict(round_dictionary) for i in range(Game.max_round + 1)]
 
         self.normalize_matrix()
 
@@ -207,7 +208,7 @@ class CardMatrix:
         self.matrix[round][card_name] = self.matrix[round].get(card_name, 0) + 1
 
     def add_another_matrix(self, other):
-        for i in range(31):
+        for i in range(Game.max_round + 1):
             for card_name in self.matrix[i].keys():
                 self.matrix[i][card_name] += other.matrix[i].get(card_name, 0) - (1000 / len(Game.card_information))
         self.normalize_matrix()
@@ -220,7 +221,7 @@ class CardMatrix:
 
     def __str__(self):
         string = '\n' + self.player_name + '\'s ' + self.type + ' Matrix:\n'
-        for i in range(1, 30):
+        for i in range(1, Game.max_round):
             string += 'Round ' + str(i) + ": " + str(self.matrix[i]) + '\n'
         return string
 
