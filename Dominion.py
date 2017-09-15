@@ -1,52 +1,6 @@
 import random
 
 
-# Card_Matrix Class
-class CardMatrix:
-    def __init__(self, type):
-
-        # type can be 'play', 'buy', or 'drop'
-        self.type = type
-
-        round_dictionary = {}
-        for card in Game.card_information.keys():
-            round_dictionary.add(card, 100)
-        self.matrix = [round_dictionary for i in range(30)]
-
-    def add_to_matrix(self, round, card_name):
-        pass
-
-    def add_another_matrix(self):
-        pass
-
-    def normalize_matrix(self):
-        pass
-
-
-# Simulator class used to simulated multiple games of Dominion
-class Simulator:
-    aggregate_play_matrix = CardMatrix('play')
-    aggregate_buy_matrix = CardMatrix('buy')
-    aggregate_drop_matrix = CardMatrix('drop')
-
-    def __init__(self, num_players):
-        self.num_players = num_players
-
-    def simulate(self, num_games):
-        for i in range(num_games):
-            g = Game(4)
-            g.run()
-            g.get_winners()
-
-
-class TestThis:
-    def __init__(self):
-        print('print this')
-
-    def test_return(self):
-        return 'hello'
-
-
 # Game class represents a single game of Dominion
 class Game:
     card_information = {
@@ -166,6 +120,7 @@ class Game:
                 max_vp = total_vp
                 max_vp_player = player
         print('\nWinner is ' + max_vp_player.name)
+        print(max_vp_player.buy_matrix)
         return max_vp_player
 
     def sum_victory_points(self, player):
@@ -207,11 +162,59 @@ class Game:
 
         print('Buying: ' + card_name)
 
+        # Adds tally to Player's buy_matrix
+        player.buy_matrix.add_to_matrix(self.round, card_name)
+
         # Adds card to Player's discard pile
         player.deck.discard_pile.append(Card({card_name: self.card_information.get(card_name)}))
 
         # Removes one tally from the center pile
         self.center_pile[card_name] = self.center_pile.get(card_name, 1) - 1
+
+
+# Card_Matrix Class
+class CardMatrix:
+    def __init__(self, type, player_name):
+
+        # type can be 'play', 'buy', or 'drop'
+        self.type = type
+        self.player_name = player_name
+
+        round_dictionary = {}
+        for card_name in Game.card_information.keys():
+            round_dictionary[card_name] = 100
+        self.matrix = [dict(round_dictionary) for i in range(31)]
+
+    def add_to_matrix(self, round, card_name):
+        self.matrix[round][card_name] = self.matrix[round].get(card_name, 0) + 1
+
+    def add_another_matrix(self):
+        pass
+
+    def normalize_matrix(self):
+        pass
+
+    def __str__(self):
+        string = '\n' + self.player_name + '\'s ' + self.type + ' Matrix:\n'
+        for round_dict in self.matrix:
+            string += str(round_dict) + '\n'
+        return string
+
+
+# Simulator class used to simulated multiple games of Dominion
+class Simulator:
+    aggregate_play_matrix = CardMatrix('play', 'Aggregate')
+    aggregate_buy_matrix = CardMatrix('buy', 'Aggregate')
+    aggregate_drop_matrix = CardMatrix('drop', 'Aggregate')
+
+    def __init__(self, num_players):
+        self.num_players = num_players
+
+    def simulate(self, num_games):
+        for i in range(num_games):
+            g = Game(4)
+            g.run()
+            g.get_winners()
 
 
 # Player class
@@ -220,8 +223,8 @@ class Player:
         self.name = name
         self.deck = Deck()
 
-        self.play_matrix = []
-        self.buy_matrix = []
+        self.action_matrix = CardMatrix('Action', self.name)
+        self.buy_matrix = CardMatrix('Buy', self.name)
 
         self.hand = []
 
