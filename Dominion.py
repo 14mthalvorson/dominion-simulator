@@ -1,3 +1,4 @@
+import pickle
 import random
 
 
@@ -197,7 +198,7 @@ class Game:
 
 # Card_Matrix Class
 class CardMatrix:
-    def __init__(self, type, player_name):
+    def __init__(self, type, player_name, filename=None):
 
         # type can be 'play', 'buy', or 'drop'
         self.type = type
@@ -206,6 +207,10 @@ class CardMatrix:
         round_dictionary = {}
         for card_name in Game.card_information.keys():
             round_dictionary[card_name] = 100
+
+        self.matrix = []
+
+        # Check if matrix is already stored in file
         self.matrix = [dict(round_dictionary) for i in range(Game.max_round + 1)]
 
         self.normalize_matrix()
@@ -223,7 +228,7 @@ class CardMatrix:
         for round_dict in self.matrix:
             stat_sum = sum(round_dict.values())
             for card_name in round_dict.keys():
-                round_dict[card_name] = max(1, int(round_dict[card_name] * 1000 / stat_sum))
+                round_dict[card_name] = max(10, int(round_dict[card_name] * 1000 / stat_sum))
 
     def __str__(self):
         string = '\n' + self.player_name + '\'s ' + self.type + ' Matrix:\n'
@@ -234,9 +239,18 @@ class CardMatrix:
 
 # Simulator class used to simulated multiple games of Dominion
 class Simulator:
-    aggregate_play_matrix = CardMatrix('play', 'Aggregate')
-    aggregate_buy_matrix = CardMatrix('buy', 'Aggregate')
-    aggregate_drop_matrix = CardMatrix('drop', 'Aggregate')
+    try:
+        aggregate_play_matrix = pickle.load(open('play.p', 'rb'))
+    except:
+        aggregate_play_matrix = CardMatrix('play', 'Aggregate')
+    try:
+        aggregate_buy_matrix = pickle.load(open('buy.p', 'rb'))
+    except:
+        aggregate_buy_matrix = CardMatrix('buy', 'Aggregate')
+    try:
+        aggregate_drop_matrix = pickle.load(open('drop.p', 'rb'))
+    except:
+        aggregate_drop_matrix = CardMatrix('drop', 'Aggregate')
 
     def __init__(self, num_players=4):
         self.num_players = num_players
@@ -247,7 +261,24 @@ class Simulator:
             g = Game(self.num_players)
             winner = g.run()
             self.aggregate_buy_matrix.add_another_matrix(winner.buy_matrix)
+
+            if (i+1)%200 == 0:
+                print("Training Round: ", i+1)
+
         print(self.aggregate_buy_matrix)
+        self.dump_matrices()
+
+    def dump_matrices(self):
+        pickle.dump(self.aggregate_play_matrix, open('play.p', 'wb'))
+        pickle.dump(self.aggregate_buy_matrix, open('buy.p', 'wb'))
+        pickle.dump(self.aggregate_drop_matrix, open('drop.p', 'wb'))
+
+    def reset(self):
+        self.aggregate_play_matrix = CardMatrix('play', 'Aggregate')
+        self.aggregate_buy_matrix = CardMatrix('buy', 'Aggregate')
+        self.aggregate_drop_matrix = CardMatrix('drop', 'Aggregate')
+
+        self.dump_matrices()
 
 
 # Player class
