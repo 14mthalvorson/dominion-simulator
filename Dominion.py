@@ -291,10 +291,10 @@ class Simulator:
     def __init__(self, num_players=4):
         self.num_players = num_players
 
-    def run(self, num_games):
+    def run(self, num_games, output=False):
         print(self.aggregate_buy_matrix)
         for i in range(num_games):
-            g = Game(self.num_players)
+            g = Game(self.num_players, output=output)
             winner = g.run()
             self.aggregate_buy_matrix.add_another_matrix(winner.buy_matrix)
 
