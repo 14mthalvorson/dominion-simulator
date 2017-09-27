@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import pickle
 import random
 
@@ -243,6 +244,14 @@ class CardMatrix:
                 elif round_dict[card_name] > small_penalty:
                     round_dict[card_name] -= small_penalty_weight
 
+    def graph(self):
+        rounds = [i+1 for i in range(49)]
+        for card_name in self.matrix[0].keys():
+            card_data = []
+            for round_dict in self.matrix:
+                card_data.append(round_dict[card_name])
+            plt.plot(rounds, card_data[1:50], label=card_name)
+
     def __str__(self):
         string = '\n' + self.player_name + '\'s ' + self.type + ' Matrix:\n'
         for i in range(1, Game.max_round):
@@ -280,6 +289,11 @@ class Simulator:
 
         print(self.aggregate_buy_matrix)
         self.dump_matrices()
+
+    def graph(self):
+        self.aggregate_buy_matrix.graph()
+        self.aggregate_play_matrix.graph()
+        self.aggregate_drop_matrix.graph()
 
     def dump_matrices(self):
         pickle.dump(self.aggregate_play_matrix, open('play.p', 'wb'))
