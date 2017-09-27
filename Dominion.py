@@ -21,7 +21,9 @@ class Game:
         #'Village': {'Category': 'Action', 'Cost': 3, 'Play Order': -1, 'Actions': 2, 'Cards': 1},
         #'Merchant': {'Category': 'Action', 'Cost': 3, 'Play Order': -1, 'Actions': 1, 'Cards': 1},
         #'Workshop': {'Category': 'Action', 'Cost': 3, 'Play Order': -1},
-        #'Smithy': {'Category': 'Action', 'Cost': 4, 'Play Order': -1, 'Cards': 3},
+
+        'Smithy': {'Category': 'Action', 'Cost': 4, 'Play Order': -1, 'Cards': 3},
+
         #'Remodel': {'Category': 'Action', 'Cost': 4, 'Play Order': -1, 'Drop': 1},
         #'Militia': {'Category': 'Action', 'Cost': 4, 'Play Order': -1, 'Money': 2},
         #'Market': {'Category': 'Action', 'Cost': 5, 'Play Order': -1, 'Actions': 1, 'Buys': 1, 'Cards': 1, 'Money': 1},
@@ -45,6 +47,8 @@ class Game:
                 'Duchy': 12,
                 'Province': 12,
                 'Colony': 12,
+
+                'Smithy': 10,
             }
 
             '''
@@ -117,9 +121,18 @@ class Game:
         self.player_list.append(self.current_player)
 
     def game_over(self):
-        if self.round == Game.max_round:
+        if self.round == Game.max_round or self.center_pile.get('Colony', -1) == 0:
             return True
         else:
+            '''
+            zero_card_count = 0
+            for card_name in self.center_pile.keys():
+                if self.center_pile[card_name] == 0:
+                    zero_card_count += 1
+            if zero_card_count >= 9:
+                return True
+            else:
+            '''
             return False
 
     def conclude_game(self):
@@ -232,7 +245,7 @@ class CardMatrix:
         # Penalty Variables
         large_penalty = 800
         large_penalty_weight = 2
-        small_penalty = 200
+        small_penalty = 120
         small_penalty_weight = 1
 
         for round_dict in self.matrix:
@@ -286,7 +299,7 @@ class Simulator:
             self.aggregate_buy_matrix.add_another_matrix(winner.buy_matrix)
 
             if (i+1)%100 == 0:
-                print("Training Round: ", i+1)
+                print("Training Game: ", i+1)
 
         print(self.aggregate_buy_matrix)
         self.dump_matrices()
