@@ -13,7 +13,7 @@ class Game:
         'Estate': {'Category': 'Victory', 'Cost': 2, 'Play Order': -1, 'VP': 1},
         'Duchy': {'Category': 'Victory', 'Cost': 5, 'Play Order': -1, 'VP': 3},
         'Province': {'Category': 'Victory', 'Cost': 8, 'Play Order': -1, 'VP': 6},
-        'Colony': {'Category': 'Victory', 'Cost': 11, 'Play Order': -1, 'VP': 10}
+        'Colony': {'Category': 'Victory', 'Cost': 11, 'Play Order': -1, 'VP': 10},
 
         #'Cellar': {'Category': 'Action', 'Cost': 2, 'Play Order': -1, 'Actions': 1},
         #'Moat': {'Category': 'Action', 'Cost': 2, 'Play Order': -1, 'Cards': 2},
@@ -25,6 +25,7 @@ class Game:
         #'Militia': {'Category': 'Action', 'Cost': 4, 'Play Order': -1, 'Money': 2},
         #'Market': {'Category': 'Action', 'Cost': 5, 'Play Order': -1, 'Actions': 1, 'Buys': 1, 'Cards': 1, 'Money': 1},
         #'Mine': {'Category': 'Action', 'Cost': 5, 'Play Order': -1}
+
     }
     max_round = 50
 
@@ -34,15 +35,15 @@ class Game:
         # Initialize starting center pile
         if center_pile is None:
             self.center_pile = {
-                'Copper': 30,
+                'Copper': 20,
                 'Silver': 20,
                 'Gold': 20,
-                'Platinum': 15,
+                'Platinum': 20,
 
                 'Estate': 20,
-                'Duchy': 15,
-                'Province': 10,
-                'Colony': 10
+                'Duchy': 20,
+                'Province': 20,
+                'Colony': 20,
             }
 
             '''
@@ -262,7 +263,7 @@ class Simulator:
             winner = g.run()
             self.aggregate_buy_matrix.add_another_matrix(winner.buy_matrix)
 
-            if (i+1)%200 == 0:
+            if (i+1)%100 == 0:
                 print("Training Round: ", i+1)
 
         print(self.aggregate_buy_matrix)
