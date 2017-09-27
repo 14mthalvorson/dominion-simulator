@@ -230,9 +230,9 @@ class CardMatrix:
     def normalize_matrix(self):
 
         # Penalty Variables
-        large_penalty = 600
+        large_penalty = 800
         large_penalty_weight = 2
-        small_penalty = 300
+        small_penalty = 200
         small_penalty_weight = 1
 
         for round_dict in self.matrix:
@@ -246,6 +246,7 @@ class CardMatrix:
 
     def graph(self):
         rounds = [i+1 for i in range(49)]
+        plt.title(self.type + ' Matrix Graph')
         for card_name in self.matrix[0].keys():
             card_data = []
             for round_dict in self.matrix:
@@ -292,8 +293,10 @@ class Simulator:
 
     def graph(self):
         self.aggregate_buy_matrix.graph()
-        self.aggregate_play_matrix.graph()
-        self.aggregate_drop_matrix.graph()
+        #self.aggregate_play_matrix.graph()
+        #self.aggregate_drop_matrix.graph()
+        plt.legend()
+        plt.show()
 
     def dump_matrices(self):
         pickle.dump(self.aggregate_play_matrix, open('play.p', 'wb'))
