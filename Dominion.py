@@ -35,15 +35,15 @@ class Game:
         # Initialize starting center pile
         if center_pile is None:
             self.center_pile = {
-                'Copper': 20,
-                'Silver': 20,
-                'Gold': 20,
+                'Copper': 32,
+                'Silver': 40,
+                'Gold': 30,
                 'Platinum': 20,
 
-                'Estate': 20,
-                'Duchy': 20,
-                'Province': 20,
-                'Colony': 20,
+                'Estate': 12,
+                'Duchy': 12,
+                'Province': 12,
+                'Colony': 12,
             }
 
             '''
@@ -217,7 +217,8 @@ class CardMatrix:
         self.normalize_matrix()
 
     def add_to_matrix(self, round, card_name):
-        self.matrix[round][card_name] = self.matrix[round].get(card_name, 0) + 1
+        weight = 3
+        self.matrix[round][card_name] = self.matrix[round].get(card_name, 0) + weight
 
     def add_another_matrix(self, other):
         for i in range(Game.max_round + 1):
@@ -226,10 +227,21 @@ class CardMatrix:
         self.normalize_matrix()
 
     def normalize_matrix(self):
+
+        # Penalty Variables
+        large_penalty = 600
+        large_penalty_weight = 2
+        small_penalty = 300
+        small_penalty_weight = 1
+
         for round_dict in self.matrix:
             stat_sum = sum(round_dict.values())
             for card_name in round_dict.keys():
                 round_dict[card_name] = max(10, int(round_dict[card_name] * 1000 / stat_sum))
+                if round_dict[card_name] > large_penalty:
+                    round_dict[card_name] -= large_penalty_weight
+                elif round_dict[card_name] > small_penalty:
+                    round_dict[card_name] -= small_penalty_weight
 
     def __str__(self):
         string = '\n' + self.player_name + '\'s ' + self.type + ' Matrix:\n'
