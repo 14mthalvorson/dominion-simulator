@@ -160,13 +160,31 @@ class Game:
         return victory_points
 
     def action_phase(self, player):
+        actions = 1
+        eligible_cards = []
         for card in player.hand:
             if card.category == 'Action':
-                if self.output:
-                    print('Playing: ' + card.name)
-                return
-        if self.output:
-            print('Not playing any card')
+                eligible_cards.append(card)
+
+        if len(eligible_cards) > 0:
+            sum_rank = 0
+            for card_name in eligible_cards:
+                sum_rank += Simulator.aggregate_play_matrix.matrix[self.round][card_name]
+
+            for card_name in eligible_cards:
+                if random.random() * sum_rank < Simulator.aggregate_play_matrix.matrix[self.round][card_name]:
+                    self.play_card(player, card_name)
+                    if self.output:
+                        print('Playing: ' + card.name)
+                    return
+                else:
+                    sum_rank -= Simulator.aggregate_play_matrix.matrix[self.round][card_name]
+        else:
+            if self.output:
+                print('Not playing any card')
+
+    def play_card(self, player, card_name):
+        pass
 
     def buy_phase(self, player):
         money = 0

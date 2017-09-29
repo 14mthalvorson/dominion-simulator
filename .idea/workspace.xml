@@ -4,7 +4,6 @@
     <list default="true" id="abbb6149-53f3-4e70-b258-5d255c63e4d4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dominion.py" afterPath="$PROJECT_DIR$/Dominion.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
     </list>
     <ignored path="dominion-simulator.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,8 +35,8 @@
           <file leaf-file-name="Dominion.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Dominion.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="799">
-                  <caret line="293" column="41" lean-forward="false" selection-start-line="293" selection-start-column="41" selection-end-line="293" selection-end-column="41" />
+                <state relative-caret-position="609">
+                  <caret line="185" column="43" lean-forward="true" selection-start-line="185" selection-start-column="43" selection-end-line="185" selection-end-column="43" />
                   <folding>
                     <element signature="e#0#31#0" expanded="true" />
                   </folding>
@@ -86,8 +85,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/simulator.py" />
-        <option value="$PROJECT_DIR$/Dominion.py" />
         <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/Dominion.py" />
       </list>
     </option>
   </component>
@@ -546,7 +545,14 @@
       <option name="project" value="LOCAL" />
       <updated>1506535382603</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Extended output options to Simulator class.">
+      <created>1506552443094</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1506552443094</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -607,7 +613,8 @@
     <MESSAGE value="Added option for graphing matrix output." />
     <MESSAGE value="Clean up appearance of graphs, graphing options. Added legend and titles to graphs." />
     <MESSAGE value="Add alternative win condition - max VP card runs out." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add alternative win condition - max VP card runs out." />
+    <MESSAGE value="Extended output options to Simulator class." />
+    <option name="LAST_COMMIT_MESSAGE" value="Extended output options to Simulator class." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -726,22 +733,22 @@
     </entry>
     <entry file="file://$USER_HOME$/.PyCharm2017.2/system/python_stubs/2089943359/builtins.py" />
     <entry file="file://$PROJECT_DIR$/drop.p" />
-    <entry file="file://$PROJECT_DIR$/Dominion.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="799">
-          <caret line="293" column="41" lean-forward="false" selection-start-line="293" selection-start-column="41" selection-end-line="293" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="22" lean-forward="false" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dominion.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="609">
+          <caret line="185" column="43" lean-forward="true" selection-start-line="185" selection-start-column="43" selection-end-line="185" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
