@@ -3,5 +3,5 @@ import matplotlib.pyplot as plt
 
 sim = Simulator()
 sim.reset()
-sim.run(1, output=True)
+sim.run(1000) # output=True)
 sim.graph()

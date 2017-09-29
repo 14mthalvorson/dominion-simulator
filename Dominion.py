@@ -17,16 +17,16 @@ class Game:
         'Colony': {'Category': 'Victory', 'Cost': 11, 'Play Order': -1, 'VP': 10},
 
         #'Cellar': {'Category': 'Action', 'Cost': 2, 'Play Order': -1, 'Actions': 1},
-        #'Moat': {'Category': 'Action', 'Cost': 2, 'Play Order': -1, 'Cards': 2},
-        #'Village': {'Category': 'Action', 'Cost': 3, 'Play Order': -1, 'Actions': 2, 'Cards': 1},
-        #'Merchant': {'Category': 'Action', 'Cost': 3, 'Play Order': -1, 'Actions': 1, 'Cards': 1},
+        #'Moat': {'Category': 'Action', 'Cost': 2, 'Play Order': -1, 'Draws': 2},
+        #'Village': {'Category': 'Action', 'Cost': 3, 'Play Order': -1, 'Actions': 2, 'Draws': 1},
+        #'Merchant': {'Category': 'Action', 'Cost': 3, 'Play Order': -1, 'Actions': 1, 'Draws': 1},
         #'Workshop': {'Category': 'Action', 'Cost': 3, 'Play Order': -1},
 
         'Smithy': {'Category': 'Action', 'Cost': 4, 'Play Order': -1, 'Cards': 3},
 
         #'Remodel': {'Category': 'Action', 'Cost': 4, 'Play Order': -1, 'Drop': 1},
         #'Militia': {'Category': 'Action', 'Cost': 4, 'Play Order': -1, 'Money': 2},
-        #'Market': {'Category': 'Action', 'Cost': 5, 'Play Order': -1, 'Actions': 1, 'Buys': 1, 'Cards': 1, 'Money': 1},
+        #'Market': {'Category': 'Action', 'Cost': 5, 'Play Order': -1, 'Actions': 1, 'Buys': 1, 'Draws': 1, 'Money': 1},
         #'Mine': {'Category': 'Action', 'Cost': 5, 'Play Order': -1}
 
     }
@@ -113,10 +113,14 @@ class Game:
         if self.output:
             print(self.current_player)
 
-        while self.current_player.actions > 1:
+        self.current_player.actions = 1
+        self.current_player.buys = 1
+        self.current_player.drops = 0
+
+        while self.current_player.actions > 0:
             self.action_phase(self.current_player)
 
-        while self.current_player.buys > 1:
+        while self.current_player.buys > 0:
             self.buy_phase(self.current_player)
 
         self.current_player.discard_hand()
@@ -177,8 +181,6 @@ class Game:
 
             for card in eligible_cards:
                 if random.random() * sum_rank < Simulator.aggregate_play_matrix.matrix[self.round][card.name]:
-                    if self.output:
-                        print('Playing: ' + card.name)
                     self.play_card(player, card.name)
                     return
                 else:
@@ -189,10 +191,21 @@ class Game:
 
     # Moves card to player's discard pile, adds card stats to player's stats for the round
     def play_card(self, player, card_name):
+        if self.output:
+            print('Playing: ' + card_name)
+
         for card in player.hand:
             if card.name == card_name:
                 play_card = card
                 player.hand.remove(play_card)
+                player.actions += self.card_information.get(play_card.name).get('Actions', 0)
+                player.buys += self.card_information.get(play_card.name).get('Buys', 0)
+                player.drops += self.card_information.get(play_card.name).get('Drops', 0)
+
+                for i in range(self.card_information.get(play_card.name).get('Draws', 0)):
+                    player.draw_card()
+
+                player.deck.discard_pile.append(play_card)
 
     def buy_phase(self, player):
         player.buys -= 1
