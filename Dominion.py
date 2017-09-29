@@ -113,8 +113,11 @@ class Game:
         if self.output:
             print(self.current_player)
 
-        self.action_phase(self.current_player)
-        self.buy_phase(self.current_player)
+        while self.current_player.actions > 1:
+            self.action_phase(self.current_player)
+
+        while self.current_player.buys > 1:
+            self.buy_phase(self.current_player)
 
         self.current_player.discard_hand()
 
@@ -159,8 +162,9 @@ class Game:
             print(player.name + ' has ' + str(victory_points) + ' victory points.')
         return victory_points
 
+    # Looks for action cards in player's hand, plays according to play_matrix
     def action_phase(self, player):
-        actions = 1
+        player.actions -= 1
         eligible_cards = []
         for card in player.hand:
             if card.category == 'Action':
@@ -168,25 +172,30 @@ class Game:
 
         if len(eligible_cards) > 0:
             sum_rank = 0
-            for card_name in eligible_cards:
-                sum_rank += Simulator.aggregate_play_matrix.matrix[self.round][card_name]
+            for card in eligible_cards:
+                sum_rank += Simulator.aggregate_play_matrix.matrix[self.round][card.name]
 
-            for card_name in eligible_cards:
-                if random.random() * sum_rank < Simulator.aggregate_play_matrix.matrix[self.round][card_name]:
-                    self.play_card(player, card_name)
+            for card in eligible_cards:
+                if random.random() * sum_rank < Simulator.aggregate_play_matrix.matrix[self.round][card.name]:
                     if self.output:
                         print('Playing: ' + card.name)
+                    self.play_card(player, card.name)
                     return
                 else:
-                    sum_rank -= Simulator.aggregate_play_matrix.matrix[self.round][card_name]
+                    sum_rank -= Simulator.aggregate_play_matrix.matrix[self.round][card.name]
         else:
             if self.output:
                 print('Not playing any card')
 
+    # Moves card to player's discard pile, adds card stats to player's stats for the round
     def play_card(self, player, card_name):
-        pass
+        for card in player.hand:
+            if card.name == card_name:
+                play_card = card
+                player.hand.remove(play_card)
 
     def buy_phase(self, player):
+        player.buys -= 1
         money = 0
         for card in player.hand:
             money += card.money
@@ -233,7 +242,7 @@ class Game:
 class CardMatrix:
     def __init__(self, type, player_name, filename=None):
 
-        # type can be 'play', 'buy', or 'drop'
+        # type can be 'Play', 'Buy', or 'Drop'
         self.type = type
         self.player_name = player_name
 
@@ -296,15 +305,15 @@ class Simulator:
     try:
         aggregate_play_matrix = pickle.load(open('play.p', 'rb'))
     except:
-        aggregate_play_matrix = CardMatrix('play', 'Aggregate')
+        aggregate_play_matrix = CardMatrix('Play', 'Aggregate')
     try:
         aggregate_buy_matrix = pickle.load(open('buy.p', 'rb'))
     except:
-        aggregate_buy_matrix = CardMatrix('buy', 'Aggregate')
+        aggregate_buy_matrix = CardMatrix('Buy', 'Aggregate')
     try:
         aggregate_drop_matrix = pickle.load(open('drop.p', 'rb'))
     except:
-        aggregate_drop_matrix = CardMatrix('drop', 'Aggregate')
+        aggregate_drop_matrix = CardMatrix('Drop', 'Aggregate')
 
     def __init__(self, num_players=4):
         self.num_players = num_players
@@ -335,9 +344,9 @@ class Simulator:
         pickle.dump(self.aggregate_drop_matrix, open('drop.p', 'wb'))
 
     def reset(self):
-        self.aggregate_play_matrix = CardMatrix('play', 'Aggregate')
-        self.aggregate_buy_matrix = CardMatrix('buy', 'Aggregate')
-        self.aggregate_drop_matrix = CardMatrix('drop', 'Aggregate')
+        self.aggregate_play_matrix = CardMatrix('Play', 'Aggregate')
+        self.aggregate_buy_matrix = CardMatrix('Buy', 'Aggregate')
+        self.aggregate_drop_matrix = CardMatrix('Drop', 'Aggregate')
 
         self.dump_matrices()
 
@@ -352,6 +361,10 @@ class Player:
         self.buy_matrix = CardMatrix('Buy', self.name)
 
         self.hand = []
+
+        self.actions = 0
+        self.buys = 0
+        self.drops = 0
 
     # Removes card from Player's draw pile and moves to hand
     def draw_card(self):
