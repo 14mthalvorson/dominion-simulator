@@ -16,18 +16,16 @@ class Game:
         'Province': {'Category': 'Victory', 'Cost': 8, 'Play Order': -1, 'VP': 6},
         'Colony': {'Category': 'Victory', 'Cost': 11, 'Play Order': -1, 'VP': 10},
 
-        #'Cellar': {'Category': 'Action', 'Cost': 2, 'Play Order': -1, 'Actions': 1},
-        #'Moat': {'Category': 'Action', 'Cost': 2, 'Play Order': -1, 'Draws': 2},
-        #'Village': {'Category': 'Action', 'Cost': 3, 'Play Order': -1, 'Actions': 2, 'Draws': 1},
-        #'Merchant': {'Category': 'Action', 'Cost': 3, 'Play Order': -1, 'Actions': 1, 'Draws': 1},
-        #'Workshop': {'Category': 'Action', 'Cost': 3, 'Play Order': -1},
-
+        'Cellar': {'Category': 'Action', 'Cost': 2, 'Play Order': -1, 'Actions': 1},
+        'Moat': {'Category': 'Action', 'Cost': 2, 'Play Order': -1, 'Draws': 2},
+        'Village': {'Category': 'Action', 'Cost': 3, 'Play Order': -1, 'Actions': 2, 'Draws': 1},
+        'Merchant': {'Category': 'Action', 'Cost': 3, 'Play Order': -1, 'Actions': 1, 'Draws': 1},
+        'Workshop': {'Category': 'Action', 'Cost': 3, 'Play Order': -1},
         'Smithy': {'Category': 'Action', 'Cost': 4, 'Play Order': -1, 'Cards': 3},
-
-        #'Remodel': {'Category': 'Action', 'Cost': 4, 'Play Order': -1, 'Drop': 1},
-        #'Militia': {'Category': 'Action', 'Cost': 4, 'Play Order': -1, 'Money': 2},
-        #'Market': {'Category': 'Action', 'Cost': 5, 'Play Order': -1, 'Actions': 1, 'Buys': 1, 'Draws': 1, 'Money': 1},
-        #'Mine': {'Category': 'Action', 'Cost': 5, 'Play Order': -1}
+        'Remodel': {'Category': 'Action', 'Cost': 4, 'Play Order': -1, 'Drop': 1},
+        'Militia': {'Category': 'Action', 'Cost': 4, 'Play Order': -1, 'Money': 2},
+        'Market': {'Category': 'Action', 'Cost': 5, 'Play Order': -1, 'Actions': 1, 'Buys': 1, 'Draws': 1, 'Money': 1},
+        'Mine': {'Category': 'Action', 'Cost': 5, 'Play Order': -1}
 
     }
     max_round = 50
@@ -48,21 +46,17 @@ class Game:
                 'Province': 12,
                 'Colony': 12,
 
+                'Village': 10,
                 'Smithy': 10,
+                'Cellar': 10,
+                'Moat': 10,
+                'Merchant': 10,
+                'Workshop': 10,
+                'Remodel': 10,
+                'Militia': 10,
+                'Market': 10,
+                'Mine': 10,
             }
-
-            '''
-            'Cellar': 10,
-            'Moat': 10,
-            'Village': 10,
-            'Merchant': 10,
-            'Workshop': 10,
-            'Smithy': 10,
-            'Remodel': 10,
-            'Militia': 10,
-            'Market': 10,
-            'Mine': 10
-            '''
 
         # Initialize player list
         self.player_list = []
