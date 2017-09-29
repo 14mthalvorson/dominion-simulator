@@ -1,5 +1,4 @@
 from Dominion import *
-import matplotlib.pyplot as plt
 
 sim = Simulator()
 #sim.reset()

@@ -188,6 +188,9 @@ class Game:
         if self.output:
             print('Playing: ' + card_name)
 
+        # Adds tally to Player's play_matrix
+        player.play_matrix.add_to_matrix(self.round, card_name)
+
         for card in player.hand:
             if card.name == card_name:
                 play_card = card
@@ -327,23 +330,31 @@ class Simulator:
 
     def run(self, num_games, output=False):
         print(self.aggregate_buy_matrix)
+        print(self.aggregate_play_matrix)
         for i in range(num_games):
             g = Game(self.num_players, output=output)
             winner = g.run()
             self.aggregate_buy_matrix.add_another_matrix(winner.buy_matrix)
+            self.aggregate_play_matrix.add_another_matrix(winner.play_matrix)
 
             if (i+1)%100 == 0:
                 print("Training Game: ", i+1)
 
         print(self.aggregate_buy_matrix)
+        print(self.aggregate_play_matrix)
         self.dump_matrices()
 
     def graph(self):
+        plt.figure(1)
         self.aggregate_buy_matrix.graph()
-        #self.aggregate_play_matrix.graph()
-        #self.aggregate_drop_matrix.graph()
         plt.legend()
-        plt.show()
+
+        plt.figure(2)
+        self.aggregate_play_matrix.graph()
+        plt.legend()
+        plt.show(2)
+
+        #self.aggregate_drop_matrix.graph()
 
     def dump_matrices(self):
         pickle.dump(self.aggregate_play_matrix, open('play.p', 'wb'))
@@ -364,7 +375,7 @@ class Player:
         self.name = name
         self.deck = Deck()
 
-        self.action_matrix = CardMatrix('Action', self.name)
+        self.play_matrix = CardMatrix('Action', self.name)
         self.buy_matrix = CardMatrix('Buy', self.name)
 
         self.hand = []
